@@ -3,6 +3,8 @@
 
 #include "config_common.h"
 
+#define UNICODE_SELECTED_MODES UC_LNX
+
 #define VENDOR_ID       0x0000
 #define PRODUCT_ID      0x0000
 #define DEVICE_VER      0x0001
