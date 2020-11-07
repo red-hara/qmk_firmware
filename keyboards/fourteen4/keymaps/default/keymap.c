@@ -7,6 +7,10 @@ enum layers {
     _FN,
 };
 
+enum kaomoji {
+    SHRUG = SAFE_RANGE,
+};
+
 #define RAISE MO(_RAISE)
 #define DOUBLE MO(_DOUBLE)
 #define FN MO(_FN)
@@ -32,12 +36,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_FN] = LAYOUT(\
         KC_ESC, KC_MUTE, KC_VOLD, KC_VOLU, KC_MEDIA_PREV_TRACK, KC_MEDIA_PLAY_PAUSE, KC_MEDIA_NEXT_TRACK, KC_NO, KC_NO, KC_NO, KC_NO, KC_BRIGHTNESS_DOWN, KC_BRIGHTNESS_UP, KC_NO, \
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, \
+        KC_NO, KC_NO, SHRUG, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, \
         KC_LSHIFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_RSHIFT, KC_PGUP, KC_INS, \
         KC_LCTL, KC_NO, KC_LWIN, KC_LALT, KC_NO, KC_SPC, KC_SPC, KC_NO, KC_RALT, KC_RCTRL, KC_APP, KC_HOME, KC_PGDN, KC_END  \
     )
 };
 
-void matrix_scan_user(void) {
-  // Empty
-};
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        switch(keycode) {
+            case SHRUG: // ¯\_(ツ)_/¯
+                if (record->event.pressed) {
+                    send_unicode_string("¯\\_(ツ)_/¯");
+                }
+                return false; 
+                break;
+        }
+    }
+    return true;
+}
